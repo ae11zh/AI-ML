@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة عقل — تعلم الذكاء الاصطناعي وتعلم الآلة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@400;600;700;900&family=Reem+Kufi:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0e14;
+  --bg-deep:#060910;
+  --panel:#101720;
+  --panel-2:#0d141d;
+  --ink:#e8edf2;
+  --ink-dim:#8a97a6;
+  --ink-faint:#5a6573;
+  --gold:#e0a458;
+  --gold-bright:#f4c074;
+  --teal:#2dd4bf;
+  --teal-deep:#0d9488;
+  --coral:#ff6b5e;
+  --violet:#a78bfa;
+  --line:rgba(255,255,255,.07);
+  --line-bright:rgba(224,164,88,.35);
+  --glow-teal:rgba(45,212,191,.15);
+  --glow-gold:rgba(224,164,88,.18);
+  --font-display:'Reem Kufi',serif;
+  --font-head:'Cairo',sans-serif;
+  --font-body:'Tajawal',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-body);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(900px 600px at 85% -10%, var(--glow-teal), transparent 60%),
+    radial-gradient(800px 500px at 5% 100%, var(--glow-gold), transparent 55%),
+    radial-gradient(600px 600px at 50% 50%, rgba(167,139,250,.04), transparent 70%);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+::selection{background:var(--gold);color:var(--bg-deep)}
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-track{background:var(--bg-deep)}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--gold),var(--teal-deep));border-radius:6px;border:2px solid var(--bg-deep)}
+
+/* ===== NAV ===== */
+.topbar{
+  position:fixed;top:0;right:0;left:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px clamp(16px,4vw,48px);
+  background:rgba(8,11,16,.7);backdrop-filter:blur(20px) saturate(140%);
+  border-bottom:1px solid var(--line);
+  transition:padding .3s,background .3s;
+}
+.topbar.shrink{padding:9px clamp(16px,4vw,48px);background:rgba(8,11,16,.92)}
+.brand{display:flex;align-items:center;gap:13px;cursor:pointer}
+.brand-mark{
+  width:42px;height:42px;position:relative;flex:none;
+  display:grid;place-items:center;
+}
+.brand-mark svg{width:100%;height:100%}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand-text b{font-family:var(--font-display);font-size:1.35rem;font-weight:700;color:var(--ink);letter-spacing:.5px}
+.brand-text span{font-size:.62rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-family:var(--font-mono)}
+.nav-links{display:flex;gap:6px;align-items:center}
+.nav-links a{
+  color:var(--ink-dim);text-decoration:none;font-size:.9rem;font-weight:500;
+  padding:8px 15px;border-radius:10px;transition:.2s;position:relative;font-family:var(--font-head);
+}
+.nav-links a:hover{color:var(--ink);background:rgba(255,255,255,.04)}
+.nav-cta{
+  background:linear-gradient(135deg,var(--gold),var(--gold-bright));
+  color:var(--bg-deep)!important;font-weight:700!important;
+  box-shadow:0 4px 20px rgba(224,164,88,.3);
+}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 26px rgba(224,164,88,.45)!important}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px}
+.burger span{width:26px;height:2px;background:var(--ink);transition:.3s;border-radius:2px}
+
+/* ===== HERO ===== */
+.hero{
+  position:relative;z-index:1;min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:120px clamp(16px,4vw,48px) 60px;
+  max-width:1400px;margin:0 auto;
+}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:7px 16px;border:1px solid var(--line-bright);border-radius:100px;
+  font-size:.78rem;letter-spacing:1px;color:var(--gold-bright);
+  font-family:var(--font-mono);margin-bottom:28px;
+  background:rgba(224,164,88,.06);width:fit-content;
+  animation:fadeUp .8s both;
+}
+.hero-eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 12px var(--teal);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(2.6rem,6vw,5rem);line-height:1.08;letter-spacing:-.5px;
+  margin-bottom:24px;animation:fadeUp .8s .1s both;
+}
+.hero h1 .accent{
+  background:linear-gradient(120deg,var(--gold-bright),var(--teal),var(--violet));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  position:relative;
+}
+.hero p.lead{
+  font-size:clamp(1.05rem,1.6vw,1.35rem);color:var(--ink-dim);
+  max-width:560px;margin-bottom:36px;line-height:1.8;font-weight:300;
+  animation:fadeUp .8s .2s both;
+}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;animation:fadeUp .8s .3s both}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:15px 30px;border-radius:14px;font-size:1rem;font-weight:700;
+  text-decoration:none;cursor:pointer;border:none;transition:.25s;font-family:var(--font-head);
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold-bright) 100%);
+  color:var(--bg-deep);box-shadow:0 8px 30px rgba(224,164,88,.35);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 38px rgba(224,164,88,.5)}
+.btn-ghost{background:rgba(255,255,255,.04);color:var(--ink);border:1px solid var(--line)}
+.btn-ghost:hover{background:rgba(255,255,255,.08);border-color:var(--line-bright)}
+.hero-stats{display:flex;gap:36px;margin-top:48px;animation:fadeUp .8s .4s both;flex-wrap:wrap}
+.stat b{font-family:var(--font-display);font-size:2.2rem;color:var(--gold-bright);display:block;line-height:1}
+.stat span{font-size:.82rem;color:var(--ink-faint);font-family:var(--font-mono)}
+
+/* Neural visual */
+.hero-visual{position:relative;height:480px;animation:fadeUp 1s .3s both}
+.neural-canvas{width:100%;height:100%}
+.float-card{
+  position:absolute;background:rgba(16,23,32,.85);backdrop-filter:blur(12px);
+  border:1px solid var(--line);border-radius:14px;padding:14px 18px;
+  font-family:var(--font-mono);font-size:.78rem;box-shadow:0 12px 40px rgba(0,0,0,.4);
+}
+.float-card .lbl{color:var(--ink-faint);font-size:.65rem;margin-bottom:4px}
+.float-card .val{color:var(--teal);font-size:1.1rem;font-weight:700}
+.fc1{top:6%;right:0;animation:floaty 5s ease-in-out infinite}
+.fc2{bottom:14%;left:-10px;animation:floaty 6s ease-in-out infinite .5s}
+.fc3{top:42%;left:8%;animation:floaty 7s ease-in-out infinite 1s}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== SECTION SHELL ===== */
+.section{position:relative;z-index:1;padding:90px clamp(16px,4vw,48px);max-width:1400px;margin:0 auto}
+.section-head{margin-bottom:54px;max-width:760px}
+.kicker{
+  font-family:var(--font-mono);font-size:.8rem;letter-spacing:3px;
+  color:var(--teal);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:12px;
+}
+.kicker::before{content:"";width:36px;height:1px;background:var(--teal)}
+.section-head h2{
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(2rem,4vw,3.2rem);line-height:1.15;margin-bottom:18px;letter-spacing:-.3px;
+}
+.section-head p{color:var(--ink-dim);font-size:1.1rem;font-weight:300;line-height:1.8}
+
+/* ===== TRACKS / DEPARTMENTS ===== */
+.tracks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:22px}
+.track-card{
+  position:relative;background:linear-gradient(160deg,var(--panel),var(--panel-2));
+  border:1px solid var(--line);border-radius:20px;padding:32px;overflow:hidden;
+  cursor:pointer;transition:.35s cubic-bezier(.2,.8,.2,1);
+}
+.track-card::before{
+  content:"";position:absolute;inset:0;opacity:0;transition:.4s;
+  background:radial-gradient(400px 200px at var(--mx,50%) var(--my,0%),var(--accent-glow,var(--glow-teal)),transparent 70%);
+}
+.track-card:hover{transform:translateY(-6px);border-color:var(--accent,var(--teal));box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.track-card:hover::before{opacity:1}
+.track-num{
+  position:absolute;top:22px;left:26px;font-family:var(--font-display);
+  font-size:3.6rem;font-weight:700;color:rgba(255,255,255,.04);line-height:1;
+}
+.track-icon{
+  width:62px;height:62px;border-radius:16px;display:grid;place-items:center;
+  margin-bottom:22px;position:relative;z-index:1;
+  background:rgba(255,255,255,.04);border:1px solid var(--line);
+}
+.track-icon svg{width:32px;height:32px}
+.track-card h3{font-family:var(--font-head);font-size:1.4rem;font-weight:700;margin-bottom:10px;position:relative;z-index:1}
+.track-card .desc{color:var(--ink-dim);font-size:.95rem;margin-bottom:20px;position:relative;z-index:1;font-weight:300;line-height:1.7}
+.track-meta{display:flex;gap:18px;position:relative;z-index:1;margin-bottom:18px}
+.track-meta span{font-size:.78rem;color:var(--ink-faint);font-family:var(--font-mono);display:flex;align-items:center;gap:6px}
+.track-tags{display:flex;flex-wrap:wrap;gap:7px;position:relative;z-index:1}
+.track-tags em{
+  font-style:normal;font-size:.72rem;padding:4px 11px;border-radius:8px;
+  background:rgba(255,255,255,.04);color:var(--ink-dim);border:1px solid var(--line);font-family:var(--font-mono);
+}
+.track-arrow{
+  position:absolute;bottom:28px;left:28px;width:38px;height:38px;border-radius:50%;
+  display:grid;place-items:center;background:rgba(255,255,255,.05);
+  border:1px solid var(--line);transition:.3s;z-index:1;
+}
+.track-card:hover .track-arrow{background:var(--accent,var(--teal));transform:rotate(-45deg)}
+.track-card:hover .track-arrow svg{stroke:var(--bg-deep)}
+
+/* ===== CURRICULUM ACCORDION ===== */
+.curriculum{display:grid;grid-template-columns:280px 1fr;gap:0;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:var(--panel-2)}
+.curr-sidebar{background:var(--bg-deep);padding:14px;border-left:1px solid var(--line)}
+.curr-tab{
+  display:flex;align-items:center;gap:13px;padding:15px 18px;border-radius:13px;
+  cursor:pointer;transition:.25s;color:var(--ink-dim);font-family:var(--font-head);font-weight:600;font-size:.96rem;
+  border:1px solid transparent;
+}
+.curr-tab:hover{background:rgba(255,255,255,.03);color:var(--ink)}
+.curr-tab.active{background:linear-gradient(135deg,rgba(224,164,88,.14),rgba(45,212,191,.08));color:var(--ink);border-color:var(--line-bright)}
+.curr-tab .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:rgba(255,255,255,.04);flex:none}
+.curr-tab.active .ic{background:var(--gold);}
+.curr-tab.active .ic svg{stroke:var(--bg-deep)}
+.curr-tab .ic svg{width:18px;height:18px}
+.curr-body{padding:38px clamp(20px,3vw,44px);min-height:480px}
+.curr-panel{display:none;animation:fadeIn .4s}
+.curr-panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.curr-panel .ph{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.curr-panel .ph h3{font-family:var(--font-display);font-size:1.9rem;font-weight:700}
+.curr-panel .ph .badge{font-family:var(--font-mono);font-size:.7rem;padding:5px 12px;border-radius:8px;background:rgba(45,212,191,.12);color:var(--teal);border:1px solid rgba(45,212,191,.25)}
+.curr-panel>p{color:var(--ink-dim);margin-bottom:28px;font-weight:300;font-size:1.02rem}
+.lesson-list{display:flex;flex-direction:column;gap:11px}
+.lesson{
+  display:flex;align-items:center;gap:16px;padding:16px 20px;border-radius:14px;
+  background:var(--panel);border:1px solid var(--line);transition:.25s;cursor:pointer;
+}
+.lesson:hover{border-color:var(--line-bright);background:#131b25;transform:translateX(-4px)}
+.lesson-no{
+  width:34px;height:34px;border-radius:10px;flex:none;display:grid;place-items:center;
+  font-family:var(--font-mono);font-size:.85rem;font-weight:700;
+  background:linear-gradient(135deg,var(--gold),var(--gold-bright));color:var(--bg-deep);
+}
+.lesson-info{flex:1}
+.lesson-info b{display:block;font-family:var(--font-head);font-weight:600;font-size:1.02rem;margin-bottom:3px}
+.lesson-info span{font-size:.82rem;color:var(--ink-faint)}
+.lesson-dur{font-family:var(--font-mono);font-size:.76rem;color:var(--teal);white-space:nowrap}
+.lesson-tag{font-size:.7rem;padding:4px 10px;border-radius:7px;font-family:var(--font-mono);white-space:nowrap}
+.tag-basic{background:rgba(45,212,191,.12);color:var(--teal)}
+.tag-inter{background:rgba(224,164,88,.12);color:var(--gold-bright)}
+.tag-adv{background:rgba(255,107,94,.12);color:var(--coral)}
+
+/* ===== PROJECTS ===== */
+.proj-filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px}
+.fpill{
+  padding:9px 20px;border-radius:100px;border:1px solid var(--line);
+  background:transparent;color:var(--ink-dim);cursor:pointer;font-size:.88rem;
+  font-family:var(--font-head);font-weight:600;transition:.25s;
+}
+.fpill:hover{border-color:var(--line-bright);color:var(--ink)}
+.fpill.active{background:var(--gold);color:var(--bg-deep);border-color:var(--gold)}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:22px}
+.proj-card{
+  background:linear-gradient(165deg,var(--panel),var(--panel-2));
+  border:1px solid var(--line);border-radius:20px;overflow:hidden;
+  transition:.35s;display:flex;flex-direction:column;
+}
+.proj-card:hover{transform:translateY(-6px);border-color:var(--line-bright);box-shadow:0 22px 55px rgba(0,0,0,.45)}
+.proj-visual{
+  height:158px;position:relative;overflow:hidden;display:grid;place-items:center;
+  border-bottom:1px solid var(--line);
+}
+.proj-visual canvas{position:absolute;inset:0;width:100%;height:100%}
+.proj-emoji{font-size:3rem;position:relative;z-index:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.5))}
+.proj-level{
+  position:absolute;top:14px;right:14px;z-index:2;font-family:var(--font-mono);
+  font-size:.68rem;padding:5px 12px;border-radius:8px;backdrop-filter:blur(8px);
+}
+.proj-content{padding:24px;flex:1;display:flex;flex-direction:column}
+.proj-content h4{font-family:var(--font-head);font-size:1.22rem;font-weight:700;margin-bottom:9px}
+.proj-content p{color:var(--ink-dim);font-size:.9rem;font-weight:300;margin-bottom:18px;flex:1;line-height:1.7}
+.proj-stack{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
+.proj-stack em{font-style:normal;font-size:.7rem;padding:4px 10px;border-radius:7px;background:rgba(167,139,250,.1);color:var(--violet);font-family:var(--font-mono);border:1px solid rgba(167,139,250,.2)}
+.proj-foot{display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid var(--line)}
+.proj-foot .steps{font-size:.78rem;color:var(--ink-faint);font-family:var(--font-mono);display:flex;align-items:center;gap:6px}
+.proj-foot a{color:var(--gold-bright);text-decoration:none;font-weight:700;font-size:.88rem;display:flex;align-items:center;gap:6px;font-family:var(--font-head);transition:.2s}
+.proj-foot a:hover{gap:10px}
+
+/* ===== CODE PLAYGROUND ===== */
+.playground{
+  background:linear-gradient(160deg,var(--panel),var(--bg-deep));
+  border:1px solid var(--line);border-radius:22px;overflow:hidden;
+}
+.pg-top{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:var(--bg-deep);border-bottom:1px solid var(--line)}
+.pg-dots{display:flex;gap:8px}
+.pg-dots i{width:13px;height:13px;border-radius:50%;display:block}
+.pg-dots i:nth-child(1){background:#ff5f57}
+.pg-dots i:nth-child(2){background:#febc2e}
+.pg-dots i:nth-child(3){background:#28c840}
+.pg-file{font-family:var(--font-mono);font-size:.82rem;color:var(--ink-dim)}
+.pg-run{
+  background:var(--teal-deep);color:#fff;border:none;padding:8px 20px;border-radius:9px;
+  font-family:var(--font-head);font-weight:700;font-size:.85rem;cursor:pointer;
+  display:flex;align-items:center;gap:7px;transition:.2s;
+}
+.pg-run:hover{background:var(--teal);box-shadow:0 0 20px var(--glow-teal)}
+.pg-body{display:grid;grid-template-columns:1fr 1fr}
+.pg-code{padding:24px;font-family:var(--font-mono);font-size:.84rem;line-height:1.85;border-left:1px solid var(--line);overflow-x:auto;direction:ltr;text-align:left}
+.pg-code .ln{color:var(--ink-faint);user-select:none;display:inline-block;width:24px}
+.c-key{color:#ff79c6}.c-fn{color:#50fa7b}.c-str{color:#f1fa8c}.c-num{color:#bd93f9}.c-com{color:#6272a4}.c-var{color:#8be9fd}
+.pg-output{padding:24px;background:var(--bg-deep);direction:ltr;text-align:left}
+.pg-output .out-head{font-family:var(--font-mono);font-size:.72rem;color:var(--ink-faint);margin-bottom:14px;text-transform:uppercase;letter-spacing:2px}
+.out-line{font-family:var(--font-mono);font-size:.84rem;color:var(--ink);margin-bottom:6px;opacity:0;animation:typeIn .3s forwards}
+.out-line.ok{color:var(--teal)}
+.out-bar{height:22px;background:linear-gradient(90deg,var(--gold),var(--teal));border-radius:5px;margin:4px 0;transform-origin:left;animation:grow 1s forwards}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes typeIn{to{opacity:1}}
+
+/* ===== ROADMAP TIMELINE ===== */
+.roadmap{position:relative;padding-right:40px}
+.roadmap::before{content:"";position:absolute;right:14px;top:0;bottom:0;width:2px;background:linear-gradient(var(--gold),var(--teal),var(--violet))}
+.rm-step{position:relative;padding-bottom:46px}
+.rm-step:last-child{padding-bottom:0}
+.rm-dot{position:absolute;right:-32px;top:4px;width:30px;height:30px;border-radius:50%;background:var(--bg);border:3px solid var(--gold);display:grid;place-items:center;font-family:var(--font-mono);font-size:.75rem;font-weight:700;color:var(--gold-bright);z-index:2}
+.rm-step:nth-child(2) .rm-dot{border-color:var(--teal);color:var(--teal)}
+.rm-step:nth-child(3) .rm-dot{border-color:var(--violet);color:var(--violet)}
+.rm-step:nth-child(4) .rm-dot{border-color:var(--coral);color:var(--coral)}
+.rm-content{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px 30px;transition:.3s}
+.rm-content:hover{border-color:var(--line-bright);transform:translateX(-6px)}
+.rm-content h4{font-family:var(--font-head);font-size:1.3rem;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.rm-content h4 .wk{font-family:var(--font-mono);font-size:.72rem;color:var(--ink-faint);background:rgba(255,255,255,.04);padding:4px 11px;border-radius:7px}
+.rm-content p{color:var(--ink-dim);font-weight:300;margin-bottom:14px}
+.rm-skills{display:flex;flex-wrap:wrap;gap:8px}
+.rm-skills span{font-size:.74rem;padding:5px 12px;border-radius:8px;background:rgba(255,255,255,.04);color:var(--ink-dim);font-family:var(--font-mono);border:1px solid var(--line)}
+
+/* ===== QUIZ ===== */
+.quiz-box{max-width:760px;margin:0 auto;background:linear-gradient(160deg,var(--panel),var(--panel-2));border:1px solid var(--line);border-radius:22px;padding:clamp(26px,4vw,46px)}
+.quiz-prog{height:6px;background:rgba(255,255,255,.06);border-radius:100px;margin-bottom:30px;overflow:hidden}
+.quiz-prog i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--teal));border-radius:100px;transition:width .5s;width:20%}
+.quiz-q{font-family:var(--font-head);font-size:1.45rem;font-weight:700;margin-bottom:8px}
+.quiz-meta{font-family:var(--font-mono);font-size:.78rem;color:var(--teal);margin-bottom:26px}
+.quiz-opts{display:flex;flex-direction:column;gap:13px;margin-bottom:26px}
+.quiz-opt{
+  display:flex;align-items:center;gap:15px;padding:17px 22px;border-radius:14px;
+  background:var(--panel);border:1.5px solid var(--line);cursor:pointer;transition:.2s;font-size:1.02rem;font-family:var(--font-head);font-weight:500;
+}
+.quiz-opt:hover{border-color:var(--line-bright);background:#131b25}
+.quiz-opt .key{width:30px;height:30px;border-radius:9px;border:1.5px solid var(--line);display:grid;place-items:center;font-family:var(--font-mono);font-weight:700;font-size:.85rem;flex:none;transition:.2s}
+.quiz-opt.correct{border-color:var(--teal);background:rgba(45,212,191,.1)}
+.quiz-opt.correct .key{background:var(--teal);border-color:var(--teal);color:var(--bg-deep)}
+.quiz-opt.wrong{border-color:var(--coral);background:rgba(255,107,94,.1)}
+.quiz-opt.wrong .key{background:var(--coral);border-color:var(--coral);color:#fff}
+.quiz-foot{display:flex;align-items:center;justify-content:space-between}
+.quiz-score{font-family:var(--font-mono);font-size:.9rem;color:var(--ink-dim)}
+.quiz-score b{color:var(--gold-bright)}
+
+/* ===== CTA ===== */
+.final-cta{position:relative;z-index:1;margin:60px clamp(16px,4vw,48px) 0;max-width:1400px;margin-inline:auto}
+.cta-inner{
+  background:linear-gradient(135deg,rgba(224,164,88,.1),rgba(45,212,191,.08),rgba(167,139,250,.06));
+  border:1px solid var(--line-bright);border-radius:30px;padding:clamp(40px,6vw,80px);
+  text-align:center;position:relative;overflow:hidden;
+}
+.cta-inner::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 50% 0%,var(--glow-gold),transparent 70%)}
+.cta-inner h2{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.6rem);font-weight:700;margin-bottom:18px;position:relative}
+.cta-inner p{color:var(--ink-dim);font-size:1.15rem;max-width:560px;margin:0 auto 34px;font-weight:300;position:relative}
+.cta-inner .hero-actions{justify-content:center;position:relative}
+
+/* ===== FOOTER ===== */
+footer{position:relative;z-index:1;border-top:1px solid var(--line);margin-top:90px;padding:54px clamp(16px,4vw,48px) 36px}
+.foot-grid{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.foot-brand p{color:var(--ink-dim);font-weight:300;margin:18px 0;max-width:300px;line-height:1.7}
+.foot-col h5{font-family:var(--font-head);font-weight:700;font-size:1rem;margin-bottom:16px;color:var(--ink)}
+.foot-col a{display:block;color:var(--ink-dim);text-decoration:none;font-size:.92rem;margin-bottom:11px;transition:.2s;font-weight:300}
+.foot-col a:hover{color:var(--gold-bright);padding-right:5px}
+.foot-bottom{max-width:1400px;margin:0 auto;padding-top:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.foot-bottom span{color:var(--ink-faint);font-size:.85rem;font-family:var(--font-mono)}
+.foot-social{display:flex;gap:12px}
+.foot-social a{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;transition:.25s}
+.foot-social a:hover{border-color:var(--gold);background:rgba(224,164,88,.08)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(40px);transition:.8s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+@media(max-width:980px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .hero-visual{height:340px;order:-1}
+  .curriculum{grid-template-columns:1fr}
+  .curr-sidebar{display:flex;gap:8px;overflow-x:auto;border-left:none;border-bottom:1px solid var(--line)}
+  .curr-tab{white-space:nowrap;flex:none}
+  .curr-tab .ic{display:none}
+  .pg-body{grid-template-columns:1fr}
+  .pg-code{border-left:none;border-bottom:1px solid var(--line)}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+  .nav-links.open{display:flex;position:absolute;top:100%;right:0;left:0;flex-direction:column;background:rgba(8,11,16,.98);padding:18px;border-bottom:1px solid var(--line);gap:4px}
+  .nav-links.open a{padding:13px}
+  .burger{display:flex}
+}
+@media(max-width:560px){
+  .foot-grid{grid-template-columns:1fr}
+  .hero-stats{gap:24px}
+  .tracks-grid,.proj-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topbar" id="topbar">
+  <div class="brand" onclick="scrollTo({top:0,behavior:'smooth'})">
+    <div class="brand-mark">
+      <svg viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="22" stroke="url(#bg1)" stroke-width="2"/>
+        <circle cx="24" cy="12" r="3.2" fill="#e0a458"/>
+        <circle cx="13" cy="22" r="3.2" fill="#2dd4bf"/>
+        <circle cx="35" cy="22" r="3.2" fill="#2dd4bf"/>
+        <circle cx="16" cy="35" r="3.2" fill="#a78bfa"/>
+        <circle cx="32" cy="35" r="3.2" fill="#a78bfa"/>
+        <circle cx="24" cy="26" r="3.6" fill="#f4c074"/>
+        <path d="M24 12 L24 26 M13 22 L24 26 M35 22 L24 26 M16 35 L24 26 M32 35 L24 26" stroke="rgba(255,255,255,.4)" stroke-width="1.3"/>
+        <defs><linearGradient id="bg1" x1="0" y1="0" x2="48" y2="48"><stop stop-color="#e0a458"/><stop offset="1" stop-color="#2dd4bf"/></linearGradient></defs>
+      </svg>
+    </div>
+    <div class="brand-text"><b>عَقْل</b><span>AQL · AI ACADEMY</span></div>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="#tracks">المسارات</a>
+    <a href="#curriculum">المنهج</a>
+    <a href="#projects">المشاريع</a>
+    <a href="#playground">المختبر</a>
+    <a href="#roadmap">خارطة الطريق</a>
+    <a href="#quiz">الاختبار</a>
+    <a href="#start" class="nav-cta">ابدأ الآن</a>
+  </div>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-grid">
+    <div class="hero-text">
+      <div class="hero-eyebrow"><span class="dot"></span> منصّة عربية شاملة · من الصِّفر إلى الاحتراف</div>
+      <h1>أتقِن <span class="accent">الذكاء الاصطناعي</span><br>وتعلُّم الآلة بثقة</h1>
+      <p class="lead">رحلة تعليمية تفاعلية متكاملة — من أساسيات الرياضيات وبايثون، مرورًا بالتعلّم العميق والشبكات العصبية، وصولًا إلى النماذج اللغوية الكبيرة والذكاء التوليدي. تعلّم بالأمثلة، طبّق بالمشاريع.</p>
+      <div class="hero-actions">
+        <a href="#tracks" class="btn btn-primary">استكشف المسارات
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        </a>
+        <a href="#playground" class="btn btn-ghost">جرّب المختبر
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b>٨</b><span>أقسام تعليمية</span></div>
+        <div class="stat"><b>٤٢+</b><span>درس تفاعلي</span></div>
+        <div class="stat"><b>٢٤</b><span>مشروع عملي</span></div>
+        <div class="stat"><b>∞</b><span>تحديثات مجانية</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <canvas class="neural-canvas" id="neuralCanvas"></canvas>
+      <div class="float-card fc1"><div class="lbl">دقة النموذج</div><div class="val">98.4%</div></div>
+      <div class="float-card fc2"><div class="lbl">epoch · loss</div><div class="val">0.0241</div></div>
+      <div class="float-card fc3"><div class="lbl">معاملات</div><div class="val">175M</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- TRACKS -->
+<section class="section" id="tracks">
+  <div class="section-head reveal">
+    <div class="kicker">الأقسام التعليمية</div>
+    <h2>ثمانية مسارات تأخذك من المبتدئ إلى الخبير</h2>
+    <p>كل مسار مُصمَّم بعناية ليبني على ما قبله، مع توازن دقيق بين النظرية والتطبيق العملي. اختر نقطة البداية المناسبة لمستواك.</p>
+  </div>
+  <div class="tracks-grid" id="tracksGrid"></div>
+</section>
+
+<!-- CURRICULUM -->
+<section class="section" id="curriculum">
+  <div class="section-head reveal">
+    <div class="kicker">المنهج التفصيلي</div>
+    <h2>تصفّح الدروس داخل كل قسم</h2>
+    <p>منهج متدرّج يغطي كل مفهوم بأمثلة حيّة وتمارين تطبيقية. اضغط على أي قسم لاستعراض دروسه.</p>
+  </div>
+  <div class="curriculum reveal">
+    <div class="curr-sidebar" id="currSidebar"></div>
+    <div class="curr-body" id="currBody"></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <div class="section-head reveal">
+    <div class="kicker">المشاريع العملية</div>
+    <h2>تعلّم بالبناء — مشاريع تطبيقية حقيقية</h2>
+    <p>لكل مفهوم نظري مشروع عملي يرسّخه. ابنِ نماذج تعمل فعلًا، من تصنيف الصور إلى روبوتات المحادثة الذكية.</p>
+  </div>
+  <div class="proj-filter" id="projFilter"></div>
+  <div class="proj-grid" id="projGrid"></div>
+</section>
+
+<!-- PLAYGROUND -->
+<section class="section" id="playground">
+  <div class="section-head reveal">
+    <div class="kicker">المختبر التفاعلي</div>
+    <h2>اكتب الكود وشاهد النتيجة فورًا</h2>
+    <p>مثال حيّ يوضّح كيف يتعلّم نموذج انحدار خطّي بسيط. اضغط «تشغيل» لمحاكاة عملية التدريب خطوة بخطوة.</p>
+  </div>
+  <div class="playground reveal">
+    <div class="pg-top">
+      <div class="pg-dots"><i></i><i></i><i></i></div>
+      <div class="pg-file">linear_regression.py — تدريب نموذج</div>
+      <button class="pg-run" id="runBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        تشغيل
+      </button>
+    </div>
+    <div class="pg-body">
+      <div class="pg-code" id="pgCode"></div>
+      <div class="pg-output" id="pgOutput">
+        <div class="out-head">المخرجات / Console</div>
+        <div style="color:var(--ink-faint);font-family:var(--font-mono);font-size:.84rem">اضغط زر التشغيل لبدء تدريب النموذج ▶</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="section" id="roadmap">
+  <div class="section-head reveal">
+    <div class="kicker">خارطة الطريق</div>
+    <h2>خطّتك خلال ١٦ أسبوعًا</h2>
+    <p>برنامج زمني واقعي يأخذك من الأساسيات إلى بناء مشاريع متقدمة، بمعدّل يناسب المتعلّم الجاد.</p>
+  </div>
+  <div class="roadmap reveal" id="roadmap"></div>
+</section>
+
+<!-- QUIZ -->
+<section class="section" id="quiz">
+  <div class="section-head reveal">
+    <div class="kicker">اختبر معرفتك</div>
+    <h2>اختبار تفاعلي سريع</h2>
+    <p>أسئلة تقيس فهمك للمفاهيم الأساسية. أجب وستظهر لك الإجابة الصحيحة فورًا.</p>
+  </div>
+  <div class="quiz-box reveal">
+    <div class="quiz-prog"><i id="quizProg"></i></div>
+    <div class="quiz-meta" id="quizMeta">السؤال ١ من ٥ · المستوى: مبتدئ</div>
+    <div class="quiz-q" id="quizQ"></div>
+    <div class="quiz-opts" id="quizOpts"></div>
+    <div class="quiz-foot">
+      <div class="quiz-score">النتيجة: <b id="quizScore">٠</b> / ٥</div>
+      <button class="btn btn-ghost" id="quizNext" style="padding:11px 24px;font-size:.9rem">السؤال التالي ←</button>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="final-cta reveal" id="start">
+  <div class="cta-inner">
+    <h2>رحلتك نحو إتقان الذكاء الاصطناعي تبدأ الآن</h2>
+    <p>انضم إلى آلاف المتعلّمين العرب الذين يبنون مستقبلهم في أكثر مجالات التقنية طلبًا. كل ما تحتاجه في مكان واحد.</p>
+    <div class="hero-actions">
+      <a href="#tracks" class="btn btn-primary">ابدأ التعلّم مجانًا
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#curriculum" class="btn btn-ghost">تصفّح المنهج كاملًا</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="brand">
+        <div class="brand-mark">
+          <svg viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="22" stroke="url(#bg2)" stroke-width="2"/>
+            <circle cx="24" cy="12" r="3.2" fill="#e0a458"/><circle cx="13" cy="22" r="3.2" fill="#2dd4bf"/>
+            <circle cx="35" cy="22" r="3.2" fill="#2dd4bf"/><circle cx="16" cy="35" r="3.2" fill="#a78bfa"/>
+            <circle cx="32" cy="35" r="3.2" fill="#a78bfa"/><circle cx="24" cy="26" r="3.6" fill="#f4c074"/>
+            <path d="M24 12 L24 26 M13 22 L24 26 M35 22 L24 26 M16 35 L24 26 M32 35 L24 26" stroke="rgba(255,255,255,.4)" stroke-width="1.3"/>
+            <defs><linearGradient id="bg2" x1="0" y1="0" x2="48" y2="48"><stop stop-color="#e0a458"/><stop offset="1" stop-color="#2dd4bf"/></linearGradient></defs>
+          </svg>
+        </div>
+        <div class="brand-text"><b>عَقْل</b><span>AQL · AI ACADEMY</span></div>
+      </div>
+      <p>منصّة عربية متكاملة لتعلّم الذكاء الاصطناعي وتعلّم الآلة، مصمّمة لتأخذك من أول سطر كود إلى بناء أنظمة ذكية متقدمة.</p>
+    </div>
+    <div class="foot-col">
+      <h5>المسارات</h5>
+      <a href="#tracks">أساسيات بايثون</a>
+      <a href="#tracks">الرياضيات للـ AI</a>
+      <a href="#tracks">تعلّم الآلة</a>
+      <a href="#tracks">التعلّم العميق</a>
+    </div>
+    <div class="foot-col">
+      <h5>الموارد</h5>
+      <a href="#projects">المشاريع</a>
+      <a href="#playground">المختبر التفاعلي</a>
+      <a href="#roadmap">خارطة الطريق</a>
+      <a href="#quiz">الاختبارات</a>
+    </div>
+    <div class="foot-col">
+      <h5>المجتمع</h5>
+      <a href="#">منتدى النقاش</a>
+      <a href="#">جلسات مباشرة</a>
+      <a href="#">دليل المساهمة</a>
+      <a href="#">الأسئلة الشائعة</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© ٢٠٢٦ منصّة عَقْل · صُمِّمت بشغف لتعليم العرب</span>
+    <div class="foot-social">
+      <a href="#" aria-label="github"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.66-.22.66-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.16.58.67.48A10 10 0 0 0 22 12c0-5.52-4.48-10-10-10z"/></svg></a>
+      <a href="#" aria-label="x"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zm-1.29 19.5h2.04L6.49 3.24H4.3z"/></svg></a>
+      <a href="#" aria-label="youtube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.5 15.5v-7l6.3 3.5z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============ DATA ============ */
+const TRACKS = [
+  {ic:'py',acc:'#e0a458',glow:'rgba(224,164,88,.18)',title:'أساسيات بايثون',desc:'لغة البرمجة الأولى في عالم الذكاء الاصطناعي. ابدأ من الصفر وأتقن أدوات التحليل.',lvl:'مبتدئ',hrs:'١٨ ساعة',lessons:6,tags:['NumPy','Pandas','Matplotlib']},
+  {ic:'math',acc:'#2dd4bf',glow:'rgba(45,212,191,.18)',title:'الرياضيات للذكاء',desc:'الجبر الخطّي، التفاضل، والاحتمالات — الأساس الرياضي الذي تقوم عليه كل الخوارزميات.',lvl:'مبتدئ',hrs:'٢٢ ساعة',lessons:5,tags:['Linear Algebra','Calculus','Stats']},
+  {ic:'ml',acc:'#a78bfa',glow:'rgba(167,139,250,.18)',title:'تعلّم الآلة',desc:'الخوارزميات الكلاسيكية: الانحدار، التصنيف، التجميع، وأشجار القرار وتطبيقاتها.',lvl:'متوسط',hrs:'٣٠ ساعة',lessons:6,tags:['Regression','SVM','Trees']},
+  {ic:'dl',acc:'#ff6b5e',glow:'rgba(255,107,94,.18)',title:'التعلّم العميق',desc:'الشبكات العصبية من الداخل: الطبقات، دوال التنشيط، والانتشار العكسي.',lvl:'متوسط',hrs:'٢٨ ساعة',lessons:5,tags:['Neural Nets','TensorFlow','PyTorch']},
+  {ic:'cv',acc:'#2dd4bf',glow:'rgba(45,212,191,.18)',title:'الرؤية الحاسوبية',desc:'تصنيف الصور، الكشف عن الأجسام، والشبكات الالتفافية CNN لمعالجة المرئيات.',lvl:'متقدم',hrs:'٢٤ ساعة',lessons:5,tags:['CNN','OpenCV','YOLO']},
+  {ic:'nlp',acc:'#e0a458',glow:'rgba(224,164,88,.18)',title:'معالجة اللغة',desc:'فهم النصوص العربية والإنجليزية، التضمينات، ونماذج المحوّلات Transformers.',lvl:'متقدم',hrs:'٢٦ ساعة',lessons:5,tags:['Tokenization','BERT','Embeddings']},
+  {ic:'llm',acc:'#a78bfa',glow:'rgba(167,139,250,.18)',title:'النماذج اللغوية الكبيرة',desc:'بناء تطبيقات على نماذج LLM، هندسة الأوامر، التوليد المعزّز بالاسترجاع RAG.',lvl:'متقدم',hrs:'٢٠ ساعة',lessons:5,tags:['Prompting','RAG','Fine-tuning']},
+  {ic:'mlops',acc:'#ff6b5e',glow:'rgba(255,107,94,.18)',title:'نشر النماذج MLOps',desc:'تحويل النماذج من المختبر إلى الإنتاج: النشر، المراقبة، والتوسّع الآمن.',lvl:'متقدم',hrs:'١٦ ساعة',lessons:5,tags:['Docker','FastAPI','Cloud']},
+];
+
+const ICONS = {
+  py:'<path d="M12 2c-2 0-4 1-4 3v3h8v1H6c-2 0-3 2-3 4s1 4 3 4h2v-3c0-2 2-3 4-3h4c2 0 3-1 3-3V5c0-2-2-3-4-3z" fill="#e0a458"/><circle cx="9" cy="5" r="1" fill="#0a0e14"/>',
+  math:'<path d="M5 7h14M5 7l5 5-5 5M14 17h5" stroke="#2dd4bf" stroke-width="2" fill="none" stroke-linecap="round"/>',
+  ml:'<circle cx="6" cy="6" r="2.5" stroke="#a78bfa" stroke-width="2" fill="none"/><circle cx="18" cy="6" r="2.5" stroke="#a78bfa" stroke-width="2" fill="none"/><circle cx="12" cy="18" r="2.5" stroke="#a78bfa" stroke-width="2" fill="none"/><path d="M6 8.5L12 15.5M18 8.5L12 15.5" stroke="#a78bfa" stroke-width="1.5"/>',
+  dl:'<rect x="3" y="9" width="4" height="6" rx="1" stroke="#ff6b5e" stroke-width="2" fill="none"/><rect x="10" y="6" width="4" height="12" rx="1" stroke="#ff6b5e" stroke-width="2" fill="none"/><rect x="17" y="9" width="4" height="6" rx="1" stroke="#ff6b5e" stroke-width="2" fill="none"/>',
+  cv:'<rect x="3" y="5" width="18" height="14" rx="2" stroke="#2dd4bf" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="3" stroke="#2dd4bf" stroke-width="2" fill="none"/>',
+  nlp:'<path d="M4 5h16v10H8l-4 4z" stroke="#e0a458" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M8 9h8M8 12h5" stroke="#e0a458" stroke-width="1.6" stroke-linecap="round"/>',
+  llm:'<path d="M12 2l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-1.5z" stroke="#a78bfa" stroke-width="1.8" fill="none" stroke-linejoin="round"/>',
+  mlops:'<path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3" stroke="#ff6b5e" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="3" stroke="#ff6b5e" stroke-width="2" fill="none"/>',
+};
+
+const CURRICULUM = [
+  {key:'py',name:'أساسيات بايثون',badge:'القسم ١',intro:'تعلّم لغة بايثون من الصفر مع التركيز على المكتبات الأساسية لعلوم البيانات والذكاء الاصطناعي.',lessons:[
+    {t:'مقدمة بايثون والمتغيّرات',d:'الأنواع، العمليات، والإدخال/الإخراج',dur:'٤٥ د',tag:'tag-basic',tt:'أساسي'},
+    {t:'هياكل البيانات والحلقات',d:'القوائم، القواميس، المجموعات، التكرار',dur:'٦٠ د',tag:'tag-basic',tt:'أساسي'},
+    {t:'الدوال والوحدات البرمجية',d:'تنظيم الكود وإعادة الاستخدام',dur:'٥٠ د',tag:'tag-basic',tt:'أساسي'},
+    {t:'مكتبة NumPy للمصفوفات',d:'العمليات العددية عالية الأداء',dur:'٧٥ د',tag:'tag-inter',tt:'متوسط'},
+    {t:'تحليل البيانات بـ Pandas',d:'DataFrames، التنظيف، التجميع',dur:'٩٠ د',tag:'tag-inter',tt:'متوسط'},
+    {t:'التصوير البياني Matplotlib',d:'رسم المخططات وتصوّر البيانات',dur:'٦٠ د',tag:'tag-inter',tt:'متوسط'},
+  ]},
+  {key:'math',name:'الرياضيات',badge:'القسم ٢',intro:'الأسس الرياضية الثلاثة التي يقوم عليها كل نموذج ذكاء اصطناعي، مشروحة بصريًا وعمليًا.',lessons:[
+    {t:'المتجهات والمصفوفات',d:'الأساس في الجبر الخطّي',dur:'٧٠ د',tag:'tag-basic',tt:'أساسي'},
+    {t:'ضرب المصفوفات والتحويلات',d:'العمود الفقري للشبكات العصبية',dur:'٨٠ د',tag:'tag-inter',tt:'متوسط'},
+    {t:'المشتقات والتدرّجات',d:'كيف تتعلّم النماذج رياضيًا',dur:'٩٠ د',tag:'tag-inter',tt:'متوسط'},
+    {t:'الاحتمالات والتوزيعات',d:'بايز، التوزيع الطبيعي، العشوائية',dur:'٧٥ د',tag:'tag-inter',tt:'متوسط'},
+    {t:'الإحصاء الاستدلالي',d:'التباين، الانحراف، فرضيات الاختبار',dur:'٦٥ د',tag:'tag-inter',tt:'متوسط'},
+  ]},
+  {key:'ml',name:'تعلّم الآلة',badge:'القسم ٣',intro:'الخوارزميات الكلاسيكية التي تشكّل أساس كل تطبيقات التعلّم الآلي العملية.',lessons:[
+    {t:'الانحدار الخطّي واللوجستي',d:'التنبؤ والتصنيف الأساسي',dur:'٨٠ د',tag:'tag-basic',tt:'أساسي'},
+    {t:'أشجار القرار والغابات',d:'Decision Trees & Random Forest',dur:'٩٠ د',tag:'tag-inter',tt:'متوسط'},
+    {t:'آلات المتجهات الداعمة SVM',d:'التصنيف بالهوامش القصوى',dur:'٨٥ د',tag:'tag-inter',tt:'متوسط'},
+    {t:'التجميع غير المُوجَّه',d:'K-Means والتجميع الهرمي',dur:'٧٠ د',tag:'tag-inter',tt:'متوسط'},
+    {t:'تقييم النماذج والمعايرة',d:'الدقة، الاستدعاء، F1، ROC',dur:'٧٥ د',tag:'tag-adv',tt:'متقدم'},
+    {t:'هندسة الميزات والمعالجة',d:'Feature Engineering & Pipelines',dur:'٨٠ د',tag:'tag-adv',tt:'متقدم'},
+  ]},
+  {key:'dl',name:'التعلّم العميق',badge:'القسم ٤',intro:'بناء الشبكات العصبية من الأساس وفهم كيف تتعلّم الآلة التمثيلات المعقّدة.',lessons:[
+    {t:'العصبون والشبكة الأمامية',d:'Perceptron & Feedforward Networks',dur:'٨٥ د',tag:'tag-inter',tt:'متوسط'},
+    {t:'الانتشار العكسي Backprop',d:'كيف تتعلّم الشبكة من الأخطاء',dur:'٩٥ د',tag:'tag-adv',tt:'متقدم'},
+    {t:'دوال التنشيط والتحسين',d:'ReLU، Adam، معدّل التعلّم',dur:'٧٠ د',tag:'tag-adv',tt:'متقدم'},
+    {t:'التنظيم ومنع الإفراط',d:'Dropout، Batch Norm، L2',dur:'٧٥ د',tag:'tag-adv',tt:'متقدم'},
+    {t:'بناء شبكة بـ PyTorch',d:'مشروع تطبيقي كامل',dur:'١٢٠ د',tag:'tag-adv',tt:'متقدم'},
+  ]},
+  {key:'cv',name:'الرؤية الحاسوبية',badge:'القسم ٥',intro:'تعليم الآلة رؤية وفهم الصور والفيديو باستخدام الشبكات الالتفافية.',lessons:[
+    {t:'معالجة الصور الأساسية',d:'OpenCV، الفلاتر، التحويلات',dur:'٧٠ د',tag:'tag-inter',tt:'متوسط'},
+    {t:'الشبكات الالتفافية CNN',d:'الطبقات الالتفافية والتجميع',dur:'١٠٠ د',tag:'tag-adv',tt:'متقدم'},
+    {t:'النقل التعلّمي Transfer Learning',d:'ResNet، VGG، الموديلات الجاهزة',dur:'٨٥ د',tag:'tag-adv',tt:'متقدم'},
+    {t:'الكشف عن الأجسام',d:'YOLO و R-CNN للكشف الفوري',dur:'٩٥ د',tag:'tag-adv',tt:'متقدم'},
+    {t:'تقسيم الصور Segmentation',d:'U-Net والتقسيم الدلالي',dur:'٨٠ د',tag:'tag-adv',tt:'متقدم'},
+  ]},
+  {key:'nlp',name:'معالجة اللغة',badge:'القسم ٦',intro:'فهم ومعالجة اللغة الطبيعية، مع تركيز خاص على تحدّيات اللغة العربية.',lessons:[
+    {t:'التقطيع والتطبيع',d:'Tokenization للنص العربي',dur:'٦٥ د',tag:'tag-inter',tt:'متوسط'},
+    {t:'التضمينات الكلامية',d:'Word2Vec، GloVe، التمثيلات',dur:'٨٠ د',tag:'tag-adv',tt:'متقدم'},
+    {t:'الشبكات المتكرّرة RNN/LSTM',d:'معالجة التسلسلات النصية',dur:'٩٠ د',tag:'tag-adv',tt:'متقدم'},
+    {t:'بنية المحوّلات Transformer',d:'آلية الانتباه Attention',dur:'١١٠ د',tag:'tag-adv',tt:'متقدم'},
+    {t:'تصنيف النصوص والمشاعر',d:'مشروع تحليل مشاعر عربي',dur:'٩٥ د',tag:'tag-adv',tt:'متقدم'},
+  ]},
+  {key:'llm',name:'النماذج اللغوية الكبيرة',badge:'القسم ٧',intro:'بناء تطبيقات عملية فوق نماذج LLM الحديثة وإتقان فن التعامل معها.',lessons:[
+    {t:'كيف تعمل نماذج LLM',d:'البنية والتدريب المسبق',dur:'٧٠ د',tag:'tag-inter',tt:'متوسط'},
+    {t:'هندسة الأوامر Prompt Engineering',d:'تقنيات صياغة الأوامر الفعّالة',dur:'٦٥ د',tag:'tag-inter',tt:'متوسط'},
+    {t:'التوليد المعزّز RAG',d:'ربط النماذج بقواعد المعرفة',dur:'٩٠ د',tag:'tag-adv',tt:'متقدم'},
+    {t:'الضبط الدقيق Fine-tuning',d:'LoRA وتخصيص النماذج',dur:'١٠٠ د',tag:'tag-adv',tt:'متقدم'},
+    {t:'بناء وكيل ذكي AI Agent',d:'مشروع وكيل يستخدم الأدوات',dur:'١٢٠ د',tag:'tag-adv',tt:'متقدم'},
+  ]},
+  {key:'mlops',name:'النشر MLOps',badge:'القسم ٨',intro:'تحويل نماذجك من تجارب في الدفاتر إلى أنظمة إنتاج موثوقة وقابلة للتوسّع.',lessons:[
+    {t:'حِزم النماذج وحفظها',d:'Pickle، ONNX، التصدير',dur:'٥٥ د',tag:'tag-inter',tt:'متوسط'},
+    {t:'بناء واجهة API بـ FastAPI',d:'تقديم النموذج كخدمة',dur:'٧٥ د',tag:'tag-adv',tt:'متقدم'},
+    {t:'الحاويات بـ Docker',d:'تغليف التطبيق للنشر',dur:'٧٠ د',tag:'tag-adv',tt:'متقدم'},
+    {t:'النشر السحابي والتوسّع',d:'AWS/GCP والموازنة',dur:'٨٥ د',tag:'tag-adv',tt:'متقدم'},
+    {t:'المراقبة وكشف الانحراف',d:'Monitoring & Drift Detection',dur:'٦٥ د',tag:'tag-adv',tt:'متقدم'},
+  ]},
+];
+
+const PROJECTS = [
+  {cat:'ml',emoji:'🏠',lvl:'مبتدئ',lc:'#2dd4bf',title:'متنبّئ أسعار العقارات',desc:'ابنِ نموذج انحدار يتنبّأ بأسعار المنازل بناءً على المساحة والموقع وعدد الغرف.',stack:['Pandas','Scikit-learn','Matplotlib'],steps:6},
+  {cat:'ml',emoji:'🌸',lvl:'مبتدئ',lc:'#2dd4bf',title:'مصنّف زهور الآيريس',desc:'المشروع الكلاسيكي الأول: صنّف أنواع الزهور باستخدام خوارزميات التصنيف.',stack:['Scikit-learn','NumPy'],steps:5},
+  {cat:'ml',emoji:'📧',lvl:'متوسط',lc:'#e0a458',title:'كاشف الرسائل المزعجة',desc:'نظام يميّز البريد المزعج عن العادي باستخدام Naive Bayes ومعالجة النصوص.',stack:['NLTK','Scikit-learn'],steps:7},
+  {cat:'dl',emoji:'🔢',lvl:'متوسط',lc:'#e0a458',title:'التعرّف على الأرقام المكتوبة',desc:'شبكة عصبية تتعرّف على الأرقام المكتوبة بخط اليد من مجموعة MNIST.',stack:['PyTorch','TorchVision'],steps:6},
+  {cat:'dl',emoji:'🎭',lvl:'متقدم',lc:'#ff6b5e',title:'مولّد الوجوه بـ GAN',desc:'شبكة توليدية تنافسية تنشئ صور وجوه واقعية لم تُرَ من قبل.',stack:['PyTorch','GAN'],steps:8},
+  {cat:'cv',emoji:'😷',lvl:'متوسط',lc:'#e0a458',title:'كاشف ارتداء الكمامة',desc:'نظام رؤية حاسوبية يكتشف فورًا إن كان الشخص يرتدي كمامة عبر الكاميرا.',stack:['OpenCV','CNN','Keras'],steps:7},
+  {cat:'cv',emoji:'🚗',lvl:'متقدم',lc:'#ff6b5e',title:'كاشف المركبات الفوري',desc:'استخدم YOLO لاكتشاف وتتبّع السيارات في فيديو حركة المرور لحظيًا.',stack:['YOLOv8','OpenCV'],steps:8},
+  {cat:'nlp',emoji:'💬',lvl:'متوسط',lc:'#e0a458',title:'محلّل المشاعر العربي',desc:'نموذج يصنّف التغريدات والمراجعات العربية إلى إيجابية أو سلبية أو محايدة.',stack:['Transformers','AraBERT'],steps:7},
+  {cat:'nlp',emoji:'📝',lvl:'متقدم',lc:'#ff6b5e',title:'ملخّص النصوص الذكي',desc:'أداة تلخّص المقالات الطويلة تلقائيًا مع الحفاظ على المعنى الأساسي.',stack:['Transformers','T5'],steps:6},
+  {cat:'llm',emoji:'🤖',lvl:'متقدم',lc:'#ff6b5e',title:'مساعد محادثة بـ RAG',desc:'روبوت محادثة يجيب عن أسئلة مستنِدًا إلى مستنداتك الخاصة عبر تقنية RAG.',stack:['LangChain','Vector DB','LLM'],steps:9},
+  {cat:'llm',emoji:'🔍',lvl:'متوسط',lc:'#e0a458',title:'محرك بحث دلالي',desc:'محرك بحث يفهم المعنى وليس الكلمات فقط، باستخدام التضمينات المتجهية.',stack:['Embeddings','FAISS'],steps:6},
+  {cat:'mlops',emoji:'🚀',lvl:'متقدم',lc:'#ff6b5e',title:'نشر نموذج كخدمة API',desc:'حوّل نموذجك إلى خدمة ويب حية باستخدام FastAPI و Docker على السحابة.',stack:['FastAPI','Docker','AWS'],steps:7},
+];
+
+const ROADMAP = [
+  {n:'١',w:'الأسابيع ١–٤',t:'الأساسات الصلبة',d:'أتقن بايثون والمكتبات الأساسية، وراجع الرياضيات الضرورية. هذه المرحلة تبني أرضيتك التي ستقف عليها كل المراحل القادمة.',skills:['Python','NumPy','Pandas','الجبر الخطّي','الإحصاء']},
+  {n:'٢',w:'الأسابيع ٥–٨',t:'دخول عالم تعلّم الآلة',d:'تعلّم الخوارزميات الكلاسيكية وكيفية تقييم النماذج. ستبني أول مشاريعك العملية التي تعمل فعلًا على بيانات حقيقية.',skills:['الانحدار','التصنيف','Scikit-learn','تقييم النماذج','هندسة الميزات']},
+  {n:'٣',w:'الأسابيع ٩–١٢',t:'الغوص في التعلّم العميق',d:'افهم الشبكات العصبية من الداخل، وتخصّص في الرؤية الحاسوبية أو معالجة اللغة حسب اهتمامك.',skills:['PyTorch','الشبكات العصبية','CNN','RNN','Transfer Learning']},
+  {n:'٤',w:'الأسابيع ١٣–١٦',t:'الاحتراف والإنتاج',d:'اعمل على النماذج اللغوية الكبيرة، وتعلّم نشر نماذجك للعالم. اختم بمشروع تخرّج متكامل يضيف لمحفظتك.',skills:['LLMs','RAG','MLOps','Docker','مشروع التخرّج']},
+];
+
+const CODE = [
+  {t:'<span class="c-com"># تدريب نموذج انحدار خطّي بسيط</span>'},
+  {t:'<span class="c-key">import</span> numpy <span class="c-key">as</span> np'},
+  {t:''},
+  {t:'<span class="c-com"># بيانات: ساعات الدراسة → الدرجات</span>'},
+  {t:'X = np.array([<span class="c-num">1</span>, <span class="c-num">2</span>, <span class="c-num">3</span>, <span class="c-num">4</span>, <span class="c-num">5</span>])'},
+  {t:'y = np.array([<span class="c-num">52</span>, <span class="c-num">61</span>, <span class="c-num">73</span>, <span class="c-num">82</span>, <span class="c-num">94</span>])'},
+  {t:''},
+  {t:'<span class="c-var">w</span>, <span class="c-var">b</span> = <span class="c-num">0.0</span>, <span class="c-num">0.0</span>'},
+  {t:'<span class="c-var">lr</span> = <span class="c-num">0.01</span>'},
+  {t:''},
+  {t:'<span class="c-key">for</span> epoch <span class="c-key">in</span> <span class="c-fn">range</span>(<span class="c-num">1000</span>):'},
+  {t:'    <span class="c-var">y_pred</span> = <span class="c-var">w</span> * X + <span class="c-var">b</span>'},
+  {t:'    <span class="c-var">error</span> = <span class="c-var">y_pred</span> - y'},
+  {t:'    <span class="c-var">w</span> -= <span class="c-var">lr</span> * (error * X).<span class="c-fn">mean</span>()'},
+  {t:'    <span class="c-var">b</span> -= <span class="c-var">lr</span> * error.<span class="c-fn">mean</span>()'},
+  {t:''},
+  {t:'<span class="c-fn">print</span>(<span class="c-str">f"التدريب اكتمل ✓"</span>)'},
+];
+
+const QUIZ = [
+  {q:'ما هي اللغة البرمجية الأكثر استخدامًا في الذكاء الاصطناعي؟',lvl:'مبتدئ',opts:['Java','بايثون Python','C++','Ruby'],correct:1},
+  {q:'أي مكتبة تُستخدم للعمليات العددية على المصفوفات في بايثون؟',lvl:'مبتدئ',opts:['Requests','NumPy','Flask','BeautifulSoup'],correct:1},
+  {q:'ماذا يعني مصطلح "Overfitting" في تعلّم الآلة؟',lvl:'متوسط',opts:['النموذج بطيء جدًا','النموذج يحفظ بيانات التدريب ويفشل في التعميم','النموذج صغير جدًا','نقص في البيانات'],correct:1},
+  {q:'ما الخوارزمية المستخدمة لتدريب الشبكات العصبية؟',lvl:'متوسط',opts:['الفرز السريع','الانتشار العكسي Backpropagation','البحث الثنائي','خوارزمية ديكسترا'],correct:1},
+  {q:'ما البنية التي تقوم عليها معظم النماذج اللغوية الكبيرة الحديثة؟',lvl:'متقدم',opts:['الشبكات الالتفافية CNN','المحوّلات Transformers','أشجار القرار','K-Means'],correct:1},
+];
+
+/* ============ RENDER TRACKS ============ */
+const tg = document.getElementById('tracksGrid');
+TRACKS.forEach((t,i)=>{
+  const tagsHtml = t.tags.map(x=>`<em>${x}</em>`).join('');
+  const el = document.createElement('div');
+  el.className='track-card';
+  el.style.setProperty('--accent',t.acc);
+  el.style.setProperty('--accent-glow',t.glow);
+  el.innerHTML=`
+    <div class="track-num">${String(i+1).padStart(2,'0')}</div>
+    <div class="track-icon"><svg viewBox="0 0 24 24" fill="none">${ICONS[t.ic]}</svg></div>
+    <h3>${t.title}</h3>
+    <div class="desc">${t.desc}</div>
+    <div class="track-meta">
+      <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="${t.acc}" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>${t.hrs}</span>
+      <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="${t.acc}" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>${t.lessons} دروس</span>
+      <span style="color:${t.acc}">${t.lvl}</span>
+    </div>
+    <div class="track-tags">${tagsHtml}</div>
+    <div class="track-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></div>`;
+  el.addEventListener('mousemove',e=>{
+    const r=el.getBoundingClientRect();
+    el.style.setProperty('--mx',(e.clientX-r.left)+'px');
+    el.style.setProperty('--my',(e.clientY-r.top)+'px');
+  });
+  el.addEventListener('click',()=>{
+    document.getElementById('curriculum').scrollIntoView({behavior:'smooth'});
+    setTimeout(()=>selectCurr(t.ic),600);
+  });
+  tg.appendChild(el);
+});
+
+/* ============ RENDER CURRICULUM ============ */
+const sidebar=document.getElementById('currSidebar');
+const body=document.getElementById('currBody');
+CURRICULUM.forEach((c,i)=>{
+  const tab=document.createElement('div');
+  tab.className='curr-tab'+(i===0?' active':'');
+  tab.dataset.key=c.key;
+  tab.innerHTML=`<div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2">${ICONS[c.key]}</svg></div>${c.name}`;
+  tab.addEventListener('click',()=>selectCurr(c.key));
+  sidebar.appendChild(tab);
+
+  const lessonsHtml=c.lessons.map((l,idx)=>`
+    <div class="lesson">
+      <div class="lesson-no">${idx+1}</div>
+      <div class="lesson-info"><b>${l.t}</b><span>${l.d}</span></div>
+      <span class="lesson-tag ${l.tag}">${l.tt}</span>
+      <span class="lesson-dur">⏱ ${l.dur}</span>
+    </div>`).join('');
+  const panel=document.createElement('div');
+  panel.className='curr-panel'+(i===0?' active':'');
+  panel.dataset.key=c.key;
+  panel.innerHTML=`
+    <div class="ph"><h3>${c.name}</h3><span class="badge">${c.badge}</span></div>
+    <p>${c.intro}</p>
+    <div class="lesson-list">${lessonsHtml}</div>`;
+  body.appendChild(panel);
+});
+function selectCurr(key){
+  document.querySelectorAll('.curr-tab').forEach(t=>t.classList.toggle('active',t.dataset.key===key));
+  document.querySelectorAll('.curr-panel').forEach(p=>p.classList.toggle('active',p.dataset.key===key));
+}
+
+/* ============ RENDER PROJECTS ============ */
+const FILTERS=[{k:'all',n:'الكل'},{k:'ml',n:'تعلّم الآلة'},{k:'dl',n:'التعلّم العميق'},{k:'cv',n:'الرؤية الحاسوبية'},{k:'nlp',n:'معالجة اللغة'},{k:'llm',n:'النماذج اللغوية'},{k:'mlops',n:'النشر'}];
+const pf=document.getElementById('projFilter');
+FILTERS.forEach((f,i)=>{
+  const b=document.createElement('button');
+  b.className='fpill'+(i===0?' active':'');
+  b.textContent=f.n;b.dataset.k=f.k;
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.fpill').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');renderProjects(f.k);
+  });
+  pf.appendChild(b);
+});
+const pg=document.getElementById('projGrid');
+function renderProjects(filter){
+  pg.innerHTML='';
+  const list=filter==='all'?PROJECTS:PROJECTS.filter(p=>p.cat===filter);
+  list.forEach((p,i)=>{
+    const stack=p.stack.map(s=>`<em>${s}</em>`).join('');
+    const lvlBg=p.lc==='#2dd4bf'?'rgba(45,212,191,.2)':p.lc==='#e0a458'?'rgba(224,164,88,.2)':'rgba(255,107,94,.2)';
+    const card=document.createElement('div');
+    card.className='proj-card';
+    card.style.animation=`fadeUp .5s ${i*0.05}s both`;
+    card.innerHTML=`
+      <div class="proj-visual" style="background:linear-gradient(135deg,${p.lc}22,transparent)">
+        <canvas class="proj-mini"></canvas>
+        <span class="proj-level" style="background:${lvlBg};color:${p.lc}">${p.lvl}</span>
+        <span class="proj-emoji">${p.emoji}</span>
+      </div>
+      <div class="proj-content">
+        <h4>${p.title}</h4>
+        <p>${p.desc}</p>
+        <div class="proj-stack">${stack}</div>
+        <div class="proj-foot">
+          <span class="steps"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>${p.steps} خطوات</span>
+          <a href="#">ابدأ المشروع <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>`;
+    pg.appendChild(card);
+    drawMini(card.querySelector('.proj-mini'),p.lc);
+  });
+}
+function drawMini(cv,color){
+  const ctx=cv.getContext('2d');const w=cv.width=cv.offsetWidth;const h=cv.height=cv.offsetHeight;
+  ctx.strokeStyle=color+'33';ctx.lineWidth=1;
+  for(let i=0;i<6;i++){
+    ctx.beginPath();
+    let x=0;ctx.moveTo(0,h/2);
+    for(x=0;x<=w;x+=8){
+      const y=h/2+Math.sin(x*0.03+i*0.8)*(15+i*4)*Math.exp(-x/w);
+      ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+  }
+}
+renderProjects('all');
+
+/* ============ RENDER PLAYGROUND CODE ============ */
+const pgCode=document.getElementById('pgCode');
+pgCode.innerHTML=CODE.map((l,i)=>`<div><span class="ln">${i+1}</span> ${l.t}</div>`).join('');
+
+document.getElementById('runBtn').addEventListener('click',function(){
+  const out=document.getElementById('pgOutput');
+  this.disabled=true;this.style.opacity='.6';
+  out.innerHTML='<div class="out-head">المخرجات / Console</div>';
+  const lines=[
+    {txt:'$ python linear_regression.py',d:0},
+    {txt:'⟳ بدء التدريب...',d:300},
+    {txt:'Epoch 100  | loss: 8.4213',d:600},
+    {txt:'Epoch 300  | loss: 2.1086',d:900},
+    {txt:'Epoch 600  | loss: 0.5132',d:1200},
+    {txt:'Epoch 1000 | loss: 0.0241',d:1500},
+  ];
+  lines.forEach(l=>{
+    setTimeout(()=>{
+      const d=document.createElement('div');
+      d.className='out-line';d.textContent=l.txt;
+      out.appendChild(d);
+    },l.d);
+  });
+  setTimeout(()=>{
+    const bar=document.createElement('div');
+    bar.innerHTML='<div style="font-family:var(--font-mono);font-size:.72rem;color:var(--ink-faint);margin:14px 0 4px">انخفاض الخطأ خلال التدريب:</div>';
+    out.appendChild(bar);
+    [90,55,28,12,5].forEach((v,i)=>{
+      setTimeout(()=>{
+        const b=document.createElement('div');
+        b.className='out-bar';b.style.width=v+'%';
+        out.appendChild(b);
+      },i*120);
+    });
+  },1800);
+  setTimeout(()=>{
+    const ok=document.createElement('div');
+    ok.className='out-line ok';ok.style.marginTop='14px';
+    ok.textContent='✓ التدريب اكتمل | w=8.42  b=44.1  | الدقة: 98.4%';
+    out.appendChild(ok);
+    this.disabled=false;this.style.opacity='1';
+  },2700);
+});
+
+/* ============ RENDER ROADMAP ============ */
+const rm=document.getElementById('roadmap');
+ROADMAP.forEach(s=>{
+  const skills=s.skills.map(x=>`<span>${x}</span>`).join('');
+  const el=document.createElement('div');
+  el.className='rm-step';
+  el.innerHTML=`
+    <div class="rm-dot">${s.n}</div>
+    <div class="rm-content">
+      <h4>${s.t}<span class="wk">${s.w}</span></h4>
+      <p>${s.d}</p>
+      <div class="rm-skills">${skills}</div>
+    </div>`;
+  rm.appendChild(el);
+});
+
+/* ============ QUIZ ============ */
+let qIdx=0,qScore=0,qAnswered=false;
+const keys=['أ','ب','ج','د'];
+function renderQuiz(){
+  const q=QUIZ[qIdx];qAnswered=false;
+  document.getElementById('quizProg').style.width=((qIdx+1)/QUIZ.length*100)+'%';
+  document.getElementById('quizMeta').textContent=`السؤال ${toAr(qIdx+1)} من ${toAr(QUIZ.length)} · المستوى: ${q.lvl}`;
+  document.getElementById('quizQ').textContent=q.q;
+  const opts=document.getElementById('quizOpts');opts.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const el=document.createElement('div');
+    el.className='quiz-opt';
+    el.innerHTML=`<div class="key">${keys[i]}</div>${o}`;
+    el.addEventListener('click',()=>{
+      if(qAnswered)return;qAnswered=true;
+      if(i===q.correct){el.classList.add('correct');qScore++;document.getElementById('quizScore').textContent=toAr(qScore);}
+      else{el.classList.add('wrong');opts.children[q.correct].classList.add('correct');}
+    });
+    opts.appendChild(el);
+  });
+}
+document.getElementById('quizNext').addEventListener('click',()=>{
+  qIdx=(qIdx+1)%QUIZ.length;
+  if(qIdx===0){qScore=0;document.getElementById('quizScore').textContent='٠';}
+  renderQuiz();
+});
+function toAr(n){return String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);}
+renderQuiz();
+
+/* ============ NEURAL CANVAS ============ */
+(function(){
+  const cv=document.getElementById('neuralCanvas');const ctx=cv.getContext('2d');
+  let W,H;
+  function resize(){W=cv.width=cv.offsetWidth*2;H=cv.height=cv.offsetHeight*2;ctx.scale(1,1);}
+  resize();window.addEventListener('resize',resize);
+  const layers=[4,6,6,3];const nodes=[];
+  function build(){
+    nodes.length=0;
+    const lw=W/(layers.length+1);
+    layers.forEach((cnt,li)=>{
+      const arr=[];const sp=H/(cnt+1);
+      for(let i=0;i<cnt;i++)arr.push({x:lw*(li+1),y:sp*(i+1),p:Math.random()*Math.PI*2});
+      nodes.push(arr);
+    });
+  }
+  build();window.addEventListener('resize',build);
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);t+=0.02;
+    // connections
+    for(let li=0;li<nodes.length-1;li++){
+      nodes[li].forEach(a=>{
+        nodes[li+1].forEach(b=>{
+          const pulse=(Math.sin(t*2+a.y*0.01+b.y*0.01)+1)/2;
+          ctx.strokeStyle=`rgba(45,212,191,${0.04+pulse*0.12})`;
+          ctx.lineWidth=1+pulse*1.5;
+          ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+          // moving pulse dot
+          if(pulse>0.85){
+            const px=a.x+(b.x-a.x)*((t*0.5)%1);
+            const py=a.y+(b.y-a.y)*((t*0.5)%1);
+            ctx.fillStyle='rgba(244,192,116,.8)';
+            ctx.beginPath();ctx.arc(px,py,2.5,0,Math.PI*2);ctx.fill();
+          }
+        });
+      });
+    }
+    // nodes
+    const colors=['#e0a458','#2dd4bf','#a78bfa','#f4c074'];
+    nodes.forEach((layer,li)=>{
+      layer.forEach(n=>{
+        const glow=(Math.sin(t*1.5+n.p)+1)/2;
+        const r=7+glow*4;
+        ctx.shadowBlur=18;ctx.shadowColor=colors[li];
+        ctx.fillStyle=colors[li];
+        ctx.beginPath();ctx.arc(n.x,n.y,r,0,Math.PI*2);ctx.fill();
+        ctx.shadowBlur=0;
+        ctx.fillStyle='rgba(255,255,255,.9)';
+        ctx.beginPath();ctx.arc(n.x,n.y,r*0.35,0,Math.PI*2);ctx.fill();
+      });
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ============ SCROLL EFFECTS ============ */
+const topbar=document.getElementById('topbar');
+window.addEventListener('scroll',()=>{topbar.classList.toggle('shrink',window.scrollY>40);});
+const burger=document.getElementById('burger');const navLinks=document.getElementById('navLinks');
+burger.addEventListener('click',()=>navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));
+
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
